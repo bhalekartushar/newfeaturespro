@@ -1,0 +1,175 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.apollographql.apollo'
+    /*id 'com.google.gms.google-services'*/
+    /*id 'com.google.firebase.crashlytics'*/
+}
+
+android {
+    compileSdk newj.sdk_compiled
+
+    defaultConfig {
+        applicationId "com.thenewj.newj"
+        minSdk newj.sdk_min
+        targetSdk newj.sdk_target
+        versionCode newj.version_code
+        versionName newj.version_release_name
+        setProperty("archivesBaseName", "NEWJ")
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${archivesBaseName}(v${variant.versionName}).apk"
+        }
+    }
+    buildTypes {
+        release {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled true
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //TODO enable after adding firebase
+            /*firebaseCrashlytics {
+                // If you don't need crash reporting for your debug build,
+                // you can speed up your build by disabling mapping file uploading.
+                mappingFileUploadEnabled false
+            }*/
+            versionNameSuffix ""
+            buildConfigField "String", "TYPE", '"RELEASE"'
+            resValue "string", "my_name", '"NEWJ Release"'
+            buildConfigField 'String', 'END_POINT', "${newj.end_point_release}"
+        }
+        debug {
+            versionNameSuffix ""
+            buildConfigField "String", "TYPE", '"DEBUG"'
+            resValue "string", "my_name", '"NEWJ ALPHA"'
+            buildConfigField 'String', 'END_POINT', "${newj.end_point_alpha}"
+        }
+        beta {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled true
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //TODO enable after adding firebase
+            /*firebaseCrashlytics {
+                // If you don't need crash reporting for your debug build,
+                // you can speed up your build by disabling mapping file uploading.
+                mappingFileUploadEnabled false
+            }*/
+            versionNameSuffix ""
+            buildConfigField "String", "TYPE", '"BETA"'
+            resValue "string", "my_name", '"NEWJ BETA"'
+            buildConfigField 'String', 'END_POINT', "${newj.end_point_beta}"
+        }
+    }
+    /*
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }*/
+    buildFeatures {
+        viewBinding true
+    }
+    apollo {
+        generateKotlinModels.set(true)
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+    implementation "com.google.code.gson:gson:$versions.gson"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.logging_interceptor"
+
+    //Hilt dependencies
+    implementation "com.google.dagger:hilt-android:$versions.hilt"
+    kapt "com.google.dagger:hilt-compiler:$versions.hilt"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$versions.glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
+
+    //Room
+    implementation "androidx.room:room-runtime:$versions.room_version"
+    annotationProcessor "androidx.room:room-compiler:$versions.room_version"
+    // optional - RxJava2 support for Room
+    implementation "androidx.room:room-rxjava2:$versions.room_version"
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$versions.room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$versions.room_version"
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$versions.room_version"
+    // optional - Paging 3 Integration
+    implementation "androidx.room:room-paging:2.4.0-beta01"
+
+    //Google Play Services
+    /*implementation "com.google.android.gms:play-services-location:$versions.play_services_location"
+    implementation "com.google.android.gms:play-services-maps:$versions.play_services_maps"*/
+
+    //Firebase
+    /*implementation platform('com.google.firebase:firebase-bom:28.4.0')
+    implementation "com.google.firebase:firebase-crashlytics:$versions.firebase_crashlytics"
+    implementation "com.google.firebase:firebase-analytics:$versions.firebase_analytics"
+    implementation "com.google.firebase:firebase-messaging:$versions.firebase_messaging"
+    implementation "com.google.firebase:firebase-inappmessaging-display:$versions.firebase_inappmessaging_display"*/
+
+    //Work Manager
+    implementation "androidx.work:work-runtime-ktx:$versions.work_runtime_ktx"
+
+    //Preferences
+    implementation "androidx.preference:preference-ktx:$versions.preference_ktx"
+
+    //GraphQL Apollo
+    implementation "com.apollographql.apollo:apollo-runtime:$versions.apollo_graphql"
+    implementation "com.apollographql.apollo:apollo-coroutines-support:$versions.apollo_graphql"
+    implementation "com.apollographql.apollo:apollo-normalized-cache-sqlite:$versions.apollo_graphql"
+
+    // Local Unit Tests
+//    implementation "androidx.test:core:1.4.0"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "com.google.truth:truth:1.1.3"
+    /*testImplementation "org.hamcrest:hamcrest-all:1.3"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.robolectric:robolectric:4.3.1"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
+    testImplementation "org.mockito:mockito-core:2.21.0"*/
+
+    // Instrumented Unit Tests
+    androidTestImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
+    androidTestImplementation "com.google.truth:truth:1.1.3"
+    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+
+    /*androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "org.mockito:mockito-core:2.21.0"*/
+
+}

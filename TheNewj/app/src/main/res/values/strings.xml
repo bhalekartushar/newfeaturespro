@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">TheNewj</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Dhiraj Jadhao</string>
+    <string name="nav_header_subtitle">Dhiraj.jadhao@thenewj.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_search">Search</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_settings">Settings</string>
+    <string name="default_notification_channel_id">THENEWJ_FIREBASE_NOTIFICATION</string>
+</resources>

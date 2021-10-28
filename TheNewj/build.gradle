@@ -1,0 +1,57 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.deps = [:]
+    def newj = [:]
+    newj.sdk_compiled = 31
+    newj.sdk_min = 21
+    newj.sdk_target = 31
+    newj.version_code = 1
+    newj.version_release_name = '1.0.1'
+    newj.version_beta_name = 'beta.1.0.1'
+    newj.version_uat_name = 'uat.1.0.1'
+    newj.end_point_alpha = '"https://jiox.co/graphql"'
+    newj.end_point_beta = '"https://jiox.co/graphql"'
+    newj.end_point_release = '"https://jiox.co/graphql"'
+    ext.newj = newj
+
+    def versions = [:]
+    versions.gradle = '7.0.2'
+    versions.kotlin = '1.5.31'
+    versions.apollo_graphql='2.4.6'
+    versions.hilt = '2.38.1'
+    versions.androidx_hilt = '1.0.0-alpha03'
+    versions.retrofit = '2.9.0'
+    versions.logging_interceptor = '4.7.2'
+    versions.gson = '2.8.6'
+    versions.android_gradle_plugin = '3.5.2'
+    versions.glide = '4.12.0'
+    versions.room_version = '2.4.0-beta01'
+    versions.google_services = '4.3.4'
+    versions.firebase_crashlytics_gradle = '2.3.0'
+    versions.play_services_location = '18.0.0'
+    versions.play_services_maps = '17.0.1'
+    versions.firebase_crashlytics = '18.2.3'
+    versions.firebase_analytics = '19.0.2'
+    versions.firebase_messaging = '22.0.0'
+    versions.firebase_inappmessaging_display = '20.1.0'
+    versions.work_runtime_ktx = '2.7.0'
+    versions.preference_ktx = '1.1.1'
+    ext.versions = versions
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$versions.gradle"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
+        classpath "com.google.gms:google-services:4.3.10"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$versions.firebase_crashlytics_gradle"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        classpath "com.apollographql.apollo:apollo-gradle-plugin:$versions.apollo_graphql"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
