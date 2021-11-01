@@ -1,0 +1,51 @@
+query ExploreView {
+  exploreView {
+    moreCategories {
+        id
+        title
+        isFollowing
+      }
+    sections {
+      sectionType {
+        id
+        name
+        showBriefCategory
+      }
+      briefs {
+        id
+        type
+        isBreaking
+        headline
+        title
+        thumbnail {
+          id
+          url
+        }
+        video {
+          id
+          url
+        }
+        publisher {
+          name
+          logo {
+            url
+            id
+          }
+          id
+        }
+        publishedAt {
+          agoFromNow
+          date
+        }
+        category {
+          id
+          title
+          logo {
+            url
+            id
+          }
+        }
+      }
+    }
+  }
+}

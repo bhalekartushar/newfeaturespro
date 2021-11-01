@@ -1,10 +1,10 @@
-package com.thenewj.newj.ui.adapter
+package com.thenewj.newj.ui.adpater
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class ManageContentPagerAdapter(fm:FragmentManager):FragmentStatePagerAdapter(fm) {
+class ManageContentPagerAdapter (fm: FragmentManager): FragmentStatePagerAdapter(fm) {
 
     val fragmentList: MutableList<Fragment> = ArrayList<Fragment>()
     val fragmentTitlelIst: MutableList<String> = ArrayList<String>()

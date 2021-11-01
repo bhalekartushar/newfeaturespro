@@ -12,4 +12,8 @@
     <color name="color_primary_dark">#002447</color>
     <color name="color_primary">#00AEEF</color>
 
+    <color name="text_color_default">#80FFFFFF</color>
+    <color name="text_color_selected">#FFFFFF</color>
+    <color name="color_shimmer_placeholder">#1AFFFFFF</color>
+
 </resources>

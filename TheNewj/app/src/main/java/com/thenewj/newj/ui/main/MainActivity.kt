@@ -1,30 +1,25 @@
 package com.thenewj.newj.ui.main
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
 import android.widget.LinearLayout
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.findNavController
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 //import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 //import com.google.firebase.messaging.FirebaseMessaging
 import com.thenewj.newj.R
-import com.thenewj.newj.data.remote.fcm.MyFirebaseMessagingService
 import com.thenewj.newj.databinding.ActivityMainBinding
+import com.thenewj.newj.ui.main.explore.ExploreFragment
+import com.thenewj.newj.ui.main.myfeed.MyFeedFragment
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.android.material.bottomsheet.BottomSheetDialog
-
-
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -36,33 +31,56 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initRegisteredToken()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        binding.toolbar.tabLayout.setupWithViewPager(binding.vp)
+        setupViewPager()
+        initListeners()
+    }
 
-        setSupportActionBar(binding.appBarMain.toolbar)
-
-        binding.appBarMain.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
+    private fun initListeners() {
+        binding.toolbar.ivThreeDots.setOnClickListener {
+//            Snackbar.make(
+//                binding.toolbar.ivThreeDots,
+//                "Work in progress...",
+//                Snackbar.LENGTH_SHORT
+//            ).show()
 
             getShowAlert();
         }
-        val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_settings, R.id.nav_logout
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        binding.vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (position == 0) {
+                    binding.toolbar.tvTab1.background =
+                        ContextCompat.getDrawable(this@MainActivity, R.drawable.shape_rectangle_tab_selected)
+                    binding.toolbar.tvTab2.background = null
+                    binding.toolbar.tvTab1.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.text_color_selected))
+                    binding.toolbar.tvTab2.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.text_color_default))
+                } else {
+                    binding.toolbar.tvTab2.background =
+                        ContextCompat.getDrawable(this@MainActivity, R.drawable.shape_rectangle_tab_selected)
+                    binding.toolbar.tvTab1.background = null
+                    binding.toolbar.tvTab2.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.text_color_selected))
+                    binding.toolbar.tvTab1.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.text_color_default))
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+        })
+        binding.toolbar.tvTab1.setOnClickListener {
+            binding.vp.currentItem = 0
+        }
+        binding.toolbar.tvTab2.setOnClickListener {
+            binding.vp.currentItem = 1
+        }
     }
 
     private fun getShowAlert() {
@@ -76,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         if (managelinear != null) {
             managelinear.setOnClickListener {
 
-                val intent = Intent(this, ManageFollwedConActivity::class.java)
+                val intent = Intent(this, ManageFollowedConActivity::class.java)
                 startActivity(intent)
 
             }
@@ -86,30 +104,49 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
+    private fun setupViewPager() {
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(MyFeedFragment(), getString(R.string.my_feed))
+        adapter.addFragment(ExploreFragment(), getString(R.string.explore))
+        binding.vp.adapter = adapter
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
+    class ViewPagerAdapter(supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager) {
 
+        private var fragmentList1: ArrayList<Fragment> = ArrayList()
+        private var fragmentTitleList1: ArrayList<String> = ArrayList()
+
+        override fun getItem(position: Int): Fragment {
+            return fragmentList1[position]
+        }
+
+        @Nullable
+        override fun getPageTitle(position: Int): CharSequence {
+            return fragmentTitleList1[position]
+        }
+
+        override fun getCount(): Int {
+            return fragmentList1.size
+        }
+
+        fun addFragment(fragment: Fragment, title: String) {
+            fragmentList1.add(fragment)
+            fragmentTitleList1.add(title)
+        }
+    }
 
     private fun initRegisteredToken() {
-       /* FirebaseMessaging.getInstance().isAutoInitEnabled = true
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
-        MyFirebaseMessagingService.sharedPref = getSharedPreferences("SM_SHARED_PREF", Context.MODE_PRIVATE)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-            MyFirebaseMessagingService.token = task.result
-            Log.i(TAG, "RegisteredToken:${MyFirebaseMessagingService.token}")
-        })*/
+        /* FirebaseMessaging.getInstance().isAutoInitEnabled = true
+         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+         MyFirebaseMessagingService.sharedPref = getSharedPreferences("SM_SHARED_PREF", Context.MODE_PRIVATE)
+         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+             if (!task.isSuccessful) {
+                 Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                 return@OnCompleteListener
+             }
+             MyFirebaseMessagingService.token = task.result
+             Log.i(TAG, "RegisteredToken:${MyFirebaseMessagingService.token}")
+         })*/
     }
 
 }

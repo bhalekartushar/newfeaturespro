@@ -1,0 +1,13 @@
+query ManageFollowedCategories {
+    manageFollowedCategories {
+        id
+        title
+        logo {
+            id
+            filename
+            url
+            imageType
+        }
+        isFollowing
+    }
+}

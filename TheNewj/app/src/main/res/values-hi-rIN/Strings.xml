@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_feed">My Feed</string>
+    <string name="explore">Explore</string>
+    <string name="work_in_progress">जल्द आएगी यह सुविधा, काम चल रहा है!</string>
+    <string name="error">असुविधा के लिए खेद है, कृपया पुनः प्रयास करें!</string>
+    <string name="retry">पुनः प्रयास करें</string>
+    <string name="breaking">ताज़ा</string>
+    <string name="more_categories">अधिक श्रेणियाँ</string>
+    <string name="follow">फॉलो करें</string>
+    <string name="following">फोलो किया है</string>
+
+</resources>

@@ -1,0 +1,8 @@
+query ManageFollowedInterests {
+    manageFollowedInterests {
+        id
+        title
+        isFollowing
+        isOptedOut
+    }
+}

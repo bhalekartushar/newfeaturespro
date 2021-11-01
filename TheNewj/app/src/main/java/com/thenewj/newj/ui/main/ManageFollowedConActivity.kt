@@ -8,21 +8,20 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.thenewj.newj.R
-import com.thenewj.newj.databinding.ActivityMainBinding
 import com.thenewj.newj.databinding.ActivityManagefollowedcontentBinding
-import com.thenewj.newj.ui.adapter.ManageContentPagerAdapter
+import com.thenewj.newj.ui.adpater.ManageContentPagerAdapter
 import com.thenewj.newj.ui.main.category.CategoryFragment
 import com.thenewj.newj.ui.main.event.EventFragment
 import com.thenewj.newj.ui.main.interest.InterestFragment
 
-class ManageFollwedConActivity: AppCompatActivity() {
+class ManageFollowedConActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityManagefollowedcontentBinding
 
 
-     lateinit var viewPager: ViewPager
-     lateinit var tabLayout: TabLayout
+    lateinit var viewPager: ViewPager
+    lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +39,7 @@ class ManageFollwedConActivity: AppCompatActivity() {
         initViews()
         setStatepagerAdpter()
 
-        tabLayout.addOnTabSelectedListener(object:TabLayout.OnTabSelectedListener
+        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener
         {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {

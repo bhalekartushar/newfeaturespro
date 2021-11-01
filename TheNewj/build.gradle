@@ -9,7 +9,7 @@ buildscript {
     newj.version_release_name = '1.0.1'
     newj.version_beta_name = 'beta.1.0.1'
     newj.version_uat_name = 'uat.1.0.1'
-    newj.end_point_alpha = '"https://jiox.co/graphql"'
+    newj.end_point_alpha = '"https://api.jiox.co/"'
     newj.end_point_beta = '"https://jiox.co/graphql"'
     newj.end_point_release = '"https://jiox.co/graphql"'
     ext.newj = newj

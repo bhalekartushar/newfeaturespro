@@ -1,0 +1,7 @@
+query ManageFollowedEvents {
+    manageFollowedEvents {
+        id
+        title
+        isFollowing
+    }
+}

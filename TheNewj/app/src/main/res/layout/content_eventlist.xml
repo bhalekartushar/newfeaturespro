@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<layout xmlns:android="http://schemas.android.com/apk/res/android">-->
-<!--    <data class = "DataBindig">-->
-<!--        <variable-->
-<!--            name="eventmodel"-->
-<!--            type="com.thenewj.newj.ui.main.event.EventViewModel" />-->
-<!--    </data>-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="title"
+            type="com.thenewj.newj.ManageFollowedEventsQuery.ManageFollowedEvent" />
+
+        <variable
+            name="isFollowing"
+            type="Boolean" />
+
+    </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/black"
     android:layout_height="match_parent">
@@ -42,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="World Cup"
+                android:text="@{title.title}"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -71,4 +80,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--</layout>-->
+</layout>
